@@ -1,0 +1,54 @@
+# Dependencies
+node_modules/
+.pnpm-store/
+
+# TypeScript
+*.tsbuildinfo
+
+# Build outputs
+dist/
+.next/
+out/
+build/
+
+# Hardhat / Contracts
+contracts/artifacts/
+contracts/cache/
+contracts/typechain-types/
+contracts/coverage/
+contracts/coverage.json
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Turbo
+.turbo/
+
+# Prisma
+packages/db/prisma/migrations/
+
+# Testing
+coverage/
+.playwright/
+test-results/
+playwright-report/
+
+# Misc
+*.log
+npm-debug.log*
+pnpm-debug.log*
+yarn-debug.log*
+yarn-error.log*
