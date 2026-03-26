@@ -16,13 +16,24 @@
     "db:migrate": "pnpm --filter @beexo/db migrate",
     "db:seed": "pnpm --filter @beexo/db seed",
     "deploy:testnet": "pnpm --filter contracts deploy:testnet",
-    "clean": "turbo clean && rm -rf node_modules"
+    "clean": "turbo clean && rm -rf node_modules",
+    "prepare": "husky"
   },
   "devDependencies": {
+    "husky": "^9.1.7",
+    "lint-staged": "^16.4.0",
     "playwright": "^1.58.2",
     "prettier": "^3.2.0",
     "turbo": "^2.4.0",
     "typescript": "^5.7.0"
+  },
+  "lint-staged": {
+    "*.{ts,tsx,js,jsx}": [
+      "prettier --write"
+    ],
+    "*.{json,md,css,yaml,yml}": [
+      "prettier --write"
+    ]
   },
   "packageManager": "pnpm@10.32.1",
   "engines": {
