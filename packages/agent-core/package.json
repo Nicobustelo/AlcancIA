@@ -1,0 +1,23 @@
+{
+  "name": "@beexo/agent-core",
+  "version": "0.1.0",
+  "private": true,
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "lint": "echo 'No lint configured'",
+    "test": "echo 'Agent tests pending'"
+  },
+  "dependencies": {
+    "@beexo/blockchain": "workspace:*",
+    "@langchain/core": "^0.3.0",
+    "@langchain/langgraph": "^0.2.0",
+    "@langchain/openai": "^0.3.0",
+    "zod": "^3.23.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "typescript": "^5.7.0"
+  }
+}
