@@ -62,3 +62,24 @@ export function addRemittance(
   store = [row, ...store];
   return row;
 }
+
+export function updateRemittanceAction(
+  id: string,
+  action: 'cancel' | 'execute',
+): RemittanceRecord | null {
+  const idx = store.findIndex((r) => r.id === id);
+  if (idx === -1) return null;
+  const row = store[idx];
+  const estado: RemittanceStatus =
+    action === 'cancel' ? 'cancelada' : 'ejecutada';
+  const updated: RemittanceRecord = { ...row, estado };
+  store = [...store.slice(0, idx), updated, ...store.slice(idx + 1)];
+  return updated;
+}
+
+export function deleteRemittance(id: string): boolean {
+  const next = store.filter((r) => r.id !== id);
+  const removed = next.length < store.length;
+  store = next;
+  return removed;
+}
