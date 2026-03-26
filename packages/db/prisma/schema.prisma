@@ -1,0 +1,131 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+/// Usuario identificado por su wallet address
+model User {
+  id            String         @id @default(cuid())
+  walletAddress String         @unique
+  displayName   String?
+  localCurrency String         @default("USD")
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+
+  conversations Conversation[]
+  plans         ExecutionPlan[]
+  remittances   Remittance[]
+  transactions  Transaction[]
+  settings      UserSettings?
+
+  @@map("users")
+}
+
+/// Conversación entre usuario y agente
+model Conversation {
+  id        String    @id @default(cuid())
+  userId    String
+  title     String?
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+
+  user     User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  messages Message[]
+  plans    ExecutionPlan[]
+
+  @@map("conversations")
+}
+
+/// Mensaje individual en una conversación
+model Message {
+  id             String   @id @default(cuid())
+  conversationId String
+  role           String   // 'user' | 'assistant' | 'system'
+  content        String
+  metadata       Json?    // plan data, tool calls, etc.
+  createdAt      DateTime @default(now())
+
+  conversation Conversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+
+  @@map("messages")
+}
+
+/// Plan de ejecución generado por el agente
+model ExecutionPlan {
+  id             String    @id @default(cuid())
+  userId         String
+  conversationId String?
+  intent         String    // tipo de intención detectada
+  summary        String    // resumen en español
+  steps          Json      // PlanStep[]
+  warnings       Json?     // string[]
+  estimates      Json?     // estimaciones
+  status         String    @default("draft") // draft | confirmed | executing | completed | failed
+  createdAt      DateTime  @default(now())
+  confirmedAt    DateTime?
+  executedAt     DateTime?
+
+  user         User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  conversation Conversation? @relation(fields: [conversationId], references: [id])
+
+  @@map("execution_plans")
+}
+
+/// Remesa programada
+model Remittance {
+  id               String    @id @default(cuid())
+  userId           String
+  recipientAddress String
+  recipientLabel   String?
+  amountUsd        Float
+  amountDoc        Float
+  dayOfMonth       Int
+  status           String    @default("scheduled") // scheduled | executing | executed | failed | cancelled
+  txHash           String?
+  onChainId        Int?      // ID en el contrato RemittanceScheduler
+  nextExecution    DateTime?
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
+  executedAt       DateTime?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("remittances")
+}
+
+/// Registro de transacciones
+model Transaction {
+  id          String   @id @default(cuid())
+  userId      String
+  type        String   // deposit | withdraw | mint_doc | supply_tropykus | remittance | strategy
+  amount      Float
+  asset       String   // RBTC | DOC | kDOC
+  txHash      String?
+  blockNumber Int?
+  status      String   @default("pending") // pending | confirmed | failed
+  metadata    Json?
+  isMock      Boolean  @default(false)
+  createdAt   DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("transactions")
+}
+
+/// Configuración del usuario
+model UserSettings {
+  id                String  @id @default(cuid())
+  userId            String  @unique
+  localCurrency     String  @default("USD")
+  localCurrencyRate Float   @default(1.0)
+  displayName       String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("user_settings")
+}
