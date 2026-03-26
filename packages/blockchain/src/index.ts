@@ -8,3 +8,7 @@ export * from './adapters/price-oracle';
 export * from './adapters/fiat-rates';
 export * from './utils/format';
 export { VaultManagerABI, StrategyExecutorABI, RemittanceSchedulerABI, ERC20ABI } from './abis';
+export * from './clients/viem-client';
+export * from './services/vault-service';
+export * from './services/strategy-service';
+export * from './services/remittance-service';
