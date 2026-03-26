@@ -1,0 +1,8 @@
+node_modules
+dist
+.next
+coverage
+contracts/artifacts
+contracts/cache
+contracts/typechain-types
+pnpm-lock.yaml
