@@ -14,6 +14,7 @@
 | TypeScript estricto | ✅ Funcional | Todas las packages typecheck sin errores |
 | Prettier | ✅ Configurado | Reglas consistentes en `.prettierrc` |
 | ESLint | ✅ Configurado | En frontend (Next.js) |
+| Husky + lint-staged | ✅ Configurado | Pre-commit: prettier --write |
 | .env.example | ✅ Completo | Todas las variables documentadas con comentarios |
 
 ### Paquetes Compartidos
@@ -23,6 +24,7 @@
 | `@beexo/blockchain` | ✅ Completo | Chains, ABIs, adapters (real+mock), feature flags, formateo |
 | `@beexo/db` | ✅ Schema completo | Prisma schema con 7 modelos, seed script |
 | `@beexo/config` | ✅ Completo | TSConfigs compartidos (base, node, nextjs) |
+| `@beexo/ui` | ✅ Scaffold | Paquete de componentes compartidos (re-exports) |
 | `@beexo/agent-core` | ✅ Completo | LangGraph, 10+ tools, system prompt, schemas |
 
 ### Smart Contracts
@@ -52,7 +54,28 @@
 | POST /api/chat | ✅ Funcional | Mock inteligente, OpenAI cuando hay clave |
 | GET /api/dashboard | ✅ Funcional | Datos mock realistas |
 | GET/POST /api/remittances | ✅ Funcional | In-memory store con seed data |
+| PATCH/DELETE /api/remittances/[id] | ✅ Funcional | Cancelar, ejecutar, eliminar remesas |
+| POST /api/plan/confirm | ✅ Funcional | Confirmar planes de ejecución |
+| GET/POST /api/user | ✅ Funcional | Configuración de usuario y moneda local |
 | GET /api/activity | ✅ Funcional | Datos mock |
+
+### Frontend Hooks
+| Hook | Estado | Notas |
+|------|--------|-------|
+| useWallet | ✅ Funcional | Estado de wallet, red, connect/disconnect |
+| useBalance | ✅ Funcional | Balance RBTC nativo vía wagmi |
+| useDashboard | ✅ Funcional | TanStack Query con refetch automático |
+| useRemittances | ✅ Funcional | CRUD completo con mutations |
+| useActivity | ✅ Funcional | Historial de transacciones |
+| useLocalCurrency | ✅ Funcional | Conversión USD→ARS/PEN/MXN |
+
+### Blockchain Services
+| Servicio | Estado | Notas |
+|----------|--------|-------|
+| viem-client | ✅ Funcional | PublicClient singleton para Rootstock |
+| vault-service | ✅ Funcional | Lectura de posiciones + prepare de txs |
+| strategy-service | ✅ Funcional | Estimaciones DOC, APY, ejecución de estrategia |
+| remittance-service | ✅ Funcional | CRUD de remesas on-chain |
 
 ### Agente IA
 | Componente | Estado | Notas |
