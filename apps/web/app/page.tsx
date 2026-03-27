@@ -19,6 +19,7 @@ import { Separator } from '@/components/ui/separator';
 import { GlowCard } from '@/components/ui/spotlight-card';
 import { ThemeToggle } from '@/components/shared/theme-toggle';
 import { WalletButton } from '@/components/shared/wallet-button';
+import { CTASection } from '@/components/ui/hero-dithering-card';
 import appLogo from '../../../assets/logotipo-de-estilo-de-vida-saludable.png';
 
 export default function LandingPage() {
@@ -86,51 +87,7 @@ export default function LandingPage() {
       </header>
 
       <main>
-        <section className="relative mx-auto max-w-6xl px-4 pb-20 pt-16 sm:px-6 sm:pt-24">
-          <div className="mx-auto max-w-3xl text-center">
-            <Badge
-              variant="secondary"
-              className="mb-6 border-violet-500/20 bg-violet-500/10 text-violet-800 dark:text-violet-200"
-            >
-              <Sparkles className="mr-1 size-3" />
-              DeFi en Rootstock para LATAM
-            </Badge>
-            <h1 className="text-balance text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl">
-              Protegé tu dinero.{' '}
-              <span className="bg-gradient-to-r from-violet-600 to-emerald-600 bg-clip-text text-transparent dark:from-violet-400 dark:to-emerald-400">
-                Generá rendimiento.
-              </span>{' '}
-              Enviá remesas.
-            </h1>
-            <p className="mx-auto mt-6 max-w-2xl text-pretty text-lg text-muted-foreground sm:text-xl">
-              Un asistente de IA te guía para ahorrar en Bitcoin, obtener rendimiento en protocolos
-              como Tropykus y programar remesas a tu familia, todo desde una experiencia simple y en
-              tu idioma.
-            </p>
-            <div className="mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row sm:gap-4">
-              <Link
-                href="/chat"
-                className={cn(
-                  buttonVariants({ size: 'lg' }),
-                  'h-12 min-w-[200px] rounded-full bg-gradient-to-r from-violet-600 to-emerald-600 px-8 text-base text-white shadow-lg shadow-violet-500/25 hover:opacity-95',
-                )}
-              >
-                Conectar wallet
-                <Wallet className="ml-2 size-4" />
-              </Link>
-              <a
-                href="#como-funciona"
-                className={cn(
-                  buttonVariants({ size: 'lg', variant: 'outline' }),
-                  'h-12 rounded-full px-8',
-                )}
-              >
-                Ver cómo funciona
-                <ArrowRight className="ml-2 size-4" />
-              </a>
-            </div>
-          </div>
-        </section>
+        <CTASection />
 
         <section
           id="como-funciona"
