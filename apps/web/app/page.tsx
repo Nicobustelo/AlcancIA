@@ -33,11 +33,13 @@ export default function LandingPage() {
             className="flex items-center gap-2 rounded-lg outline-none ring-offset-background focus-visible:ring-2 focus-visible:ring-ring"
           >
             <div className="flex size-9 items-center justify-center rounded-xl bg-gradient-to-br from-violet-600 to-emerald-600 text-sm font-bold text-white shadow-lg shadow-violet-500/25">
-              B
+              A
             </div>
             <div className="leading-tight">
-              <span className="block text-base font-bold tracking-tight">Beexo</span>
-              <span className="text-xs font-medium text-muted-foreground">AgentYield</span>
+              <span className="block text-base font-bold tracking-tight">AlcancIA</span>
+              <span className="text-xs font-medium text-muted-foreground">
+                Asistente financiero
+              </span>
             </div>
           </Link>
           <nav className="hidden items-center gap-8 text-sm font-medium md:flex">
@@ -137,9 +139,7 @@ export default function LandingPage() {
           <div className="mx-auto max-w-6xl px-4 sm:px-6">
             <div className="mx-auto max-w-2xl text-center">
               <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">Cómo funciona</h2>
-              <p className="mt-3 text-muted-foreground">
-                Tres pasos para empezar a usar Beexo AgentYield
-              </p>
+              <p className="mt-3 text-muted-foreground">Tres pasos para empezar a usar AlcancIA</p>
             </div>
             <div className="mt-14 grid gap-8 md:grid-cols-3">
               {[
@@ -247,8 +247,8 @@ export default function LandingPage() {
                   Construido para el futuro financiero de LATAM
                 </h2>
                 <p className="mt-4 text-muted-foreground">
-                  AgentYield combina Rootstock, contratos inteligentes y un agente conversacional
-                  para acercar el ahorro en Bitcoin y las remesas a más personas.
+                  AlcancIA combina Rootstock, contratos inteligentes y un agente conversacional para
+                  acercar el ahorro en Bitcoin y las remesas a más personas.
                 </p>
                 <div className="mt-6 flex flex-wrap gap-2">
                   {['Next.js 15', 'Wagmi / Viem', 'Rootstock', 'IA', 'TypeScript'].map((t) => (
@@ -297,7 +297,7 @@ export default function LandingPage() {
       <footer className="border-t border-border/60 bg-muted/20 py-12">
         <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-6 px-4 sm:flex-row sm:px-6">
           <div className="text-center text-sm text-muted-foreground sm:text-left">
-            <p>© {new Date().getFullYear()} Beexo AgentYield</p>
+            <p>© {new Date().getFullYear()} AlcancIA</p>
             <p className="mt-1">Rootstock Testnet · Solo para demostración</p>
           </div>
           <div className="flex flex-wrap items-center justify-center gap-4 text-sm">

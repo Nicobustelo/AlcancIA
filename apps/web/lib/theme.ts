@@ -1,4 +1,4 @@
-export const THEME_STORAGE_KEY = 'beexo-theme';
+export const THEME_STORAGE_KEY = 'alcancia-theme';
 
 export type Theme = 'light' | 'dark';
 

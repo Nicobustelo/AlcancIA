@@ -1,4 +1,4 @@
-# Guion de demo (3–5 minutos) — Beexo AgentYield
+# Guion de demo (3–5 minutos) — AlcancIA
 
 Guion en español para presentar el proyecto a jurados o en video. Ajustá tiempos según el formato.
 
@@ -8,7 +8,7 @@ Guion en español para presentar el proyecto a jurados o en video. Ajustá tiemp
 
 ## Introducción (30–45 s)
 
-**Decís:** “Beexo AgentYield es una plataforma DeFi en **Rootstock** que combina **protección en DOC**, **yield en Tropykus** y **remesas programadas**, guiada por un **agente en español** que arma un plan antes de cualquier ejecución.”
+**Decís:** “AlcancIA es una plataforma DeFi en **Rootstock** que combina **protección en DOC**, **yield en Tropykus** y **remesas programadas**, guiada por un **agente en español** que arma un plan antes de cualquier ejecución.”
 
 Mostrá la **landing** (`/`) y el mensaje de valor: ahorro, inflación, remesas familiares.
 
@@ -26,7 +26,7 @@ Mostrá la **landing** (`/`) y el mensaje de valor: ahorro, inflación, remesas 
 
 1. Clic en conectar wallet (**Reown / WalletConnect**).
 2. Elegí la cuenta y verificá que la red sea **RSK Testnet** (chain id 31) si la UI lo muestra.
-3. Comentá: “Acá entra Beexo Wallet o cualquier wallet compatible.”
+3. Comentá: “Acá entra AlcancIA Wallet o cualquier wallet compatible.”
 
 ---
 

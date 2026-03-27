@@ -1,5 +1,5 @@
 /**
- * @beexo/ui — Componentes compartidos del monorepo.
+ * @beexo/ui — Componentes compartidos del monorepo de AlcancIA.
  *
  * Los componentes UI principales viven en apps/web/components/ui/
  * Este paquete sirve como punto de re-exportación si otros paquetes

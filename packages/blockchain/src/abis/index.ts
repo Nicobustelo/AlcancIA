@@ -5,7 +5,7 @@ import RemittanceScheduler from './RemittanceScheduler.json';
 import StrategyExecutor from './StrategyExecutor.json';
 import VaultManager from './VaultManager.json';
 
-/** ABI tipado para VaultManager (AgentYield) */
+/** ABI tipado para VaultManager (AlcancIA) */
 export const VaultManagerABI = VaultManager as Abi;
 /** ABI tipado para StrategyExecutor */
 export const StrategyExecutorABI = StrategyExecutor as Abi;

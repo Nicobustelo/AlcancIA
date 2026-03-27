@@ -75,12 +75,7 @@ function PlanCard({
       </CardContent>
       {plan.requiresConfirmation ? (
         <CardFooter className="flex flex-wrap gap-2">
-          <Button
-            type="button"
-            size="sm"
-            disabled={confirmed}
-            onClick={onConfirm}
-          >
+          <Button type="button" size="sm" disabled={confirmed} onClick={onConfirm}>
             {confirmed ? 'Plan confirmado' : 'Confirmar plan'}
           </Button>
           <span className="text-xs text-muted-foreground">
@@ -98,7 +93,7 @@ export default function ChatPage() {
       id: 'welcome',
       role: 'assistant',
       content:
-        '¡Hola! Soy tu asistente de Beexo AgentYield. Elegí una sugerencia o escribí qué querés hacer con tu dinero en Rootstock.',
+        '¡Hola! Soy tu asistente de AlcancIA. Elegí una sugerencia o escribí qué querés hacer con tu dinero en Rootstock.',
     },
   ]);
   const [input, setInput] = useState('');
@@ -159,8 +154,7 @@ export default function ChatPage() {
         {
           id: `e-${Date.now()}`,
           role: 'assistant',
-          content:
-            'Hubo un error al contactar al servidor. Probá de nuevo en unos segundos.',
+          content: 'Hubo un error al contactar al servidor. Probá de nuevo en unos segundos.',
         },
       ]);
     } finally {
@@ -171,9 +165,7 @@ export default function ChatPage() {
 
   const confirmPlan = (id: string) => {
     setMessages((m) =>
-      m.map((msg) =>
-        msg.id === id ? { ...msg, planConfirmed: true, plan: msg.plan } : msg,
-      ),
+      m.map((msg) => (msg.id === id ? { ...msg, planConfirmed: true, plan: msg.plan } : msg)),
     );
   };
 
@@ -201,9 +193,7 @@ export default function ChatPage() {
         </CardHeader>
         <CardContent className="flex flex-1 flex-col gap-4 p-0">
           <div className="px-4 pt-4">
-            <p className="mb-2 text-xs font-medium text-muted-foreground">
-              Sugerencias rápidas
-            </p>
+            <p className="mb-2 text-xs font-medium text-muted-foreground">Sugerencias rápidas</p>
             <div className="flex flex-wrap gap-2">
               {QUICK_PROMPTS.map((p) => (
                 <Button
@@ -224,15 +214,15 @@ export default function ChatPage() {
             </div>
           </div>
           <Separator />
-          <ScrollArea className="min-h-[420px] flex-1 px-4 pb-4" maxHeightClassName="max-h-[min(60vh,520px)]">
+          <ScrollArea
+            className="min-h-[420px] flex-1 px-4 pb-4"
+            maxHeightClassName="max-h-[min(60vh,520px)]"
+          >
             <div className="space-y-4 py-2">
               {messages.map((msg) => (
                 <div
                   key={msg.id}
-                  className={cn(
-                    'flex',
-                    msg.role === 'user' ? 'justify-end' : 'justify-start',
-                  )}
+                  className={cn('flex', msg.role === 'user' ? 'justify-end' : 'justify-start')}
                 >
                   <div
                     className={cn(

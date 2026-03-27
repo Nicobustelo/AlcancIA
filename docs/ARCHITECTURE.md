@@ -1,4 +1,4 @@
-# Arquitectura — Beexo AgentYield
+# Arquitectura — AlcancIA
 
 Documento técnico en español: cómo encajan el monorepo, la cadena, el agente y la base de datos.
 
@@ -53,11 +53,11 @@ Similar patrón en `/api/remittances` y `/api/activity` según evolucione el pro
 
 ### 3.1 Contratos principales
 
-| Contrato | Rol |
-|----------|-----|
-| **VaultManager** | Custodia lógica de **RBTC** (payable) y **DOC** (ERC20); balances por usuario; registro de shares Tropykus; solo el `StrategyExecutor` autorizado puede mutar ciertas posiciones. |
-| **StrategyExecutor** | Orquesta **RBTC → DOC** vía interfaz **Money on Chain** y **supply** en **Tropykus**; soporta `useFallbackMode` para simular mint/supply cuando el protocolo externo no está disponible. |
-| **RemittanceScheduler** | Programa remesas en **DOC**: destinatario, monto, día del mes (1–28); estados `Scheduled`, `Executed`, etc. |
+| Contrato                | Rol                                                                                                                                                                                      |
+| ----------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **VaultManager**        | Custodia lógica de **RBTC** (payable) y **DOC** (ERC20); balances por usuario; registro de shares Tropykus; solo el `StrategyExecutor` autorizado puede mutar ciertas posiciones.        |
+| **StrategyExecutor**    | Orquesta **RBTC → DOC** vía interfaz **Money on Chain** y **supply** en **Tropykus**; soporta `useFallbackMode` para simular mint/supply cuando el protocolo externo no está disponible. |
+| **RemittanceScheduler** | Programa remesas en **DOC**: destinatario, monto, día del mes (1–28); estados `Scheduled`, `Executed`, etc.                                                                              |
 
 ### 3.2 Interfaces y librerías
 
@@ -99,14 +99,14 @@ Ver [AI_PROCESS.md](./AI_PROCESS.md) para el listado y comportamiento. Todas con
 
 ### 5.1 Rutas
 
-| Ruta | Descripción |
-|------|-------------|
-| `/` | Landing |
-| `/(app)/chat` | Chat con agente |
-| `/(app)/dashboard` | Resumen de saldos y yield (datos de API) |
-| `/(app)/remesas` | Lista / gestión de remesas |
-| `/(app)/actividad` | Historial |
-| `/(app)/configuracion` | Ajustes |
+| Ruta                   | Descripción                              |
+| ---------------------- | ---------------------------------------- |
+| `/`                    | Landing                                  |
+| `/(app)/chat`          | Chat con agente                          |
+| `/(app)/dashboard`     | Resumen de saldos y yield (datos de API) |
+| `/(app)/remesas`       | Lista / gestión de remesas               |
+| `/(app)/actividad`     | Historial                                |
+| `/(app)/configuracion` | Ajustes                                  |
 
 El grupo `(app)` comparte layout (navegación, etc.) sin afectar la URL pública.
 
@@ -157,4 +157,4 @@ El esquema está preparado para persistir el flujo del agente aunque parte de la
 
 ---
 
-*Última actualización alineada con el código del repositorio Beexo AgentYield.*
+_Última actualización alineada con el código del repositorio AlcancIA._

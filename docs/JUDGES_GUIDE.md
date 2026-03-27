@@ -1,4 +1,4 @@
-# Guía para jurados — Beexo AgentYield
+# Guía para jurados — AlcancIA
 
 Esta guía ayuda a evaluar el proyecto con criterios claros: qué mirar primero, qué es demostrable hoy y dónde está el valor técnico.
 
@@ -12,23 +12,23 @@ Esta guía ayuda a evaluar el proyecto con criterios claros: qué mirar primero,
 
 ## Transparencia: real vs mock
 
-| Área | Estado en demo | Cómo verificarlo |
-|------|----------------|------------------|
-| Wallet + RPC | Real (configurable) | Conectar wallet; explorador RSK. |
-| Contratos (código) | Real | Tests Hardhat; deploy testnet opcional. |
-| Precio BTC/USD | Real por defecto | CoinGecko + caché; ver `price-oracle.ts`. |
-| MoC / Tropykus | Híbrido | Flags `NEXT_PUBLIC_ENABLE_REAL_*`; fallback a mock. |
-| Dashboard API | Mock | `app/api/dashboard/route.ts` devuelve JSON fijo marcado `mock: true`. |
-| Chat sin `OPENAI_API_KEY` | Mock | `buildMockReply` + indicador “Simulado” en UI. |
-| Chat con clave | Real (LLM + tools) | Respuesta “OpenAI” en UI; tools con datos mixtos. |
+| Área                      | Estado en demo      | Cómo verificarlo                                                      |
+| ------------------------- | ------------------- | --------------------------------------------------------------------- |
+| Wallet + RPC              | Real (configurable) | Conectar wallet; explorador RSK.                                      |
+| Contratos (código)        | Real                | Tests Hardhat; deploy testnet opcional.                               |
+| Precio BTC/USD            | Real por defecto    | CoinGecko + caché; ver `price-oracle.ts`.                             |
+| MoC / Tropykus            | Híbrido             | Flags `NEXT_PUBLIC_ENABLE_REAL_*`; fallback a mock.                   |
+| Dashboard API             | Mock                | `app/api/dashboard/route.ts` devuelve JSON fijo marcado `mock: true`. |
+| Chat sin `OPENAI_API_KEY` | Mock                | `buildMockReply` + indicador “Simulado” en UI.                        |
+| Chat con clave            | Real (LLM + tools)  | Respuesta “OpenAI” en UI; tools con datos mixtos.                     |
 
 **Honestidad:** el equipo documenta mocks donde existen; no se presentan datos estáticos del dashboard como “on-chain verificado” sin aclaración.
 
 ## Cómo levantar el proyecto en ~2 minutos
 
 ```bash
-git clone https://github.com/<org>/beexo-agent-yield.git
-cd beexo-agent-yield
+git clone https://github.com/<org>/alcancia.git
+cd alcancia
 pnpm install
 cp .env.example .env
 pnpm dev

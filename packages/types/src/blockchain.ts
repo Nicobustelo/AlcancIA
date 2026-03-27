@@ -40,7 +40,7 @@ export interface TransactionResult {
 }
 
 /**
- * Direcciones de contratos propios y de protocolos externos usados por AgentYield.
+ * Direcciones de contratos propios y de protocolos externos usados por AlcancIA.
  * Los campos opcionales permiten entornos parcialmente configurados.
  */
 export interface ProtocolAddresses {

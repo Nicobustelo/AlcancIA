@@ -1,4 +1,4 @@
-export const APP_NAME = 'Beexo AgentYield';
+export const APP_NAME = 'AlcancIA';
 export const APP_DESCRIPTION =
   'Protegé tus ahorros, generá rendimiento y enviá remesas con inteligencia artificial';
 
@@ -26,8 +26,7 @@ export const QUICK_PROMPTS = [
 ];
 
 export const EXPLORER_BASE_URL =
-  process.env.NEXT_PUBLIC_RSK_EXPLORER_TESTNET ||
-  'https://explorer.testnet.rootstock.io';
+  process.env.NEXT_PUBLIC_RSK_EXPLORER_TESTNET || 'https://explorer.testnet.rootstock.io';
 
 export const NAV_ITEMS = [
   { label: 'Chat', href: '/chat', icon: 'MessageSquare' },

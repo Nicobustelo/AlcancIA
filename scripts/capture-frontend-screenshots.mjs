@@ -1,5 +1,5 @@
 /**
- * One-off Playwright flow: capture Beexo AgentYield pages at 1440x900.
+ * One-off Playwright flow: capture AlcancIA pages at 1440x900.
  * Run with: pnpm exec node scripts/capture-frontend-screenshots.mjs
  */
 import { mkdir } from 'node:fs/promises';

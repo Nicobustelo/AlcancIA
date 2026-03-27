@@ -1,8 +1,8 @@
 {
-  "name": "beexo-agent-yield",
+  "name": "alcancia",
   "version": "0.1.0",
   "private": true,
-  "description": "Beexo AgentYield — AI-powered DeFi yield + remittance platform on Rootstock",
+  "description": "AlcancIA — AI-powered DeFi yield + remittance platform on Rootstock",
   "scripts": {
     "dev": "turbo dev",
     "build": "turbo build",

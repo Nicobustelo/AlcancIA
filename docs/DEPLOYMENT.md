@@ -1,4 +1,4 @@
-# Deployment — Beexo AgentYield
+# Deployment — AlcancIA
 
 Guía en español para desplegar contratos en RSK testnet, configurar entorno y publicar frontend/servicios.
 
@@ -94,9 +94,9 @@ Healthcheck: `GET /api/health`.
 - [ ] RPC testnet respondiendo (o fallback mock activo sin sorpresas).
 - [ ] Landing y rutas `(app)` cargan sin errores en consola críticos.
 
-## 6. Beexo Wallet para la demo
+## 6. AlcancIA Wallet para la demo
 
-- Instalá o abrí **Beexo Wallet** (o la wallet que usen en el hackathon).
+- Instalá o abrí **AlcancIA Wallet** (o la wallet que usen en el hackathon).
 - Agregá **Rootstock Testnet** si no está por defecto (chain id **31**).
 - Conectá vía **WalletConnect** escaneando el QR de la dApp o usando el browser integrado si aplica.
 
@@ -106,18 +106,18 @@ Healthcheck: `GET /api/health`.
 2. Solicitá tRBTC a la dirección de tu wallet de prueba.
 3. Esperá confirmaciones y verificá saldo en el explorer de testnet.
 
-*(Las URLs exactas de faucets cambian; usá la fuente oficial del evento o de Rootstock.)*
+_(Las URLs exactas de faucets cambian; usá la fuente oficial del evento o de Rootstock.)_
 
 ## 8. Troubleshooting
 
-| Síntoma | Posible causa | Acción |
-|---------|---------------|--------|
-| Deploy Hardhat falla | Sin fondos / clave incorrecta | Verificar `DEPLOYER_PRIVATE_KEY` y saldo tRBTC |
-| Wallet no conecta | Project ID inválido | Revisar `NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID` |
-| Chat siempre “Simulado” | Sin `OPENAI_API_KEY` | Esperado; agregar clave o mostrar mock a propósito |
-| Precios raros | CoinGecko down / rate limit | Revisar caché y flag del oráculo; mock temporal |
-| Prisma error al migrar | `DIRECT_URL` incorrecto | Supabase pooler vs conexión directa |
-| CORS en agente | Frontend en otro dominio | Configurar `cors` en `apps/agent` con orígenes permitidos |
+| Síntoma                 | Posible causa                 | Acción                                                    |
+| ----------------------- | ----------------------------- | --------------------------------------------------------- |
+| Deploy Hardhat falla    | Sin fondos / clave incorrecta | Verificar `DEPLOYER_PRIVATE_KEY` y saldo tRBTC            |
+| Wallet no conecta       | Project ID inválido           | Revisar `NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID`            |
+| Chat siempre “Simulado” | Sin `OPENAI_API_KEY`          | Esperado; agregar clave o mostrar mock a propósito        |
+| Precios raros           | CoinGecko down / rate limit   | Revisar caché y flag del oráculo; mock temporal           |
+| Prisma error al migrar  | `DIRECT_URL` incorrecto       | Supabase pooler vs conexión directa                       |
+| CORS en agente          | Frontend en otro dominio      | Configurar `cors` en `apps/agent` con orígenes permitidos |
 
 ---
 

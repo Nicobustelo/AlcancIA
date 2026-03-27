@@ -1,4 +1,4 @@
-# 📋 Estado Final — Beexo AgentYield
+# 📋 Estado Final — AlcancIA
 
 > Documento generado como revisión final del proyecto para hackathon.
 
@@ -7,94 +7,103 @@
 ## ✅ Estado de Implementación
 
 ### Monorepo
-| Componente | Estado | Notas |
-|-----------|--------|-------|
-| pnpm workspaces | ✅ Funcional | 9 workspaces configurados |
-| Turborepo | ✅ Funcional | Tasks: build, dev, lint, typecheck, test |
-| TypeScript estricto | ✅ Funcional | Todas las packages typecheck sin errores |
-| Prettier | ✅ Configurado | Reglas consistentes en `.prettierrc` |
-| ESLint | ✅ Configurado | En frontend (Next.js) |
-| Husky + lint-staged | ✅ Configurado | Pre-commit: prettier --write |
-| .env.example | ✅ Completo | Todas las variables documentadas con comentarios |
+
+| Componente          | Estado         | Notas                                            |
+| ------------------- | -------------- | ------------------------------------------------ |
+| pnpm workspaces     | ✅ Funcional   | 9 workspaces configurados                        |
+| Turborepo           | ✅ Funcional   | Tasks: build, dev, lint, typecheck, test         |
+| TypeScript estricto | ✅ Funcional   | Todas las packages typecheck sin errores         |
+| Prettier            | ✅ Configurado | Reglas consistentes en `.prettierrc`             |
+| ESLint              | ✅ Configurado | En frontend (Next.js)                            |
+| Husky + lint-staged | ✅ Configurado | Pre-commit: prettier --write                     |
+| .env.example        | ✅ Completo    | Todas las variables documentadas con comentarios |
 
 ### Paquetes Compartidos
-| Paquete | Estado | Notas |
-|---------|--------|-------|
-| `@beexo/types` | ✅ Completo | Tipos para agent, blockchain, dashboard, remesas, API |
-| `@beexo/blockchain` | ✅ Completo | Chains, ABIs, adapters (real+mock), feature flags, formateo |
-| `@beexo/db` | ✅ Schema completo | Prisma schema con 7 modelos, seed script |
-| `@beexo/config` | ✅ Completo | TSConfigs compartidos (base, node, nextjs) |
-| `@beexo/ui` | ✅ Scaffold | Paquete de componentes compartidos (re-exports) |
-| `@beexo/agent-core` | ✅ Completo | LangGraph, 10+ tools, system prompt, schemas |
+
+| Paquete             | Estado             | Notas                                                       |
+| ------------------- | ------------------ | ----------------------------------------------------------- |
+| `@beexo/types`      | ✅ Completo        | Tipos para agent, blockchain, dashboard, remesas, API       |
+| `@beexo/blockchain` | ✅ Completo        | Chains, ABIs, adapters (real+mock), feature flags, formateo |
+| `@beexo/db`         | ✅ Schema completo | Prisma schema con 7 modelos, seed script                    |
+| `@beexo/config`     | ✅ Completo        | TSConfigs compartidos (base, node, nextjs)                  |
+| `@beexo/ui`         | ✅ Scaffold        | Paquete de componentes compartidos (re-exports)             |
+| `@beexo/agent-core` | ✅ Completo        | LangGraph, 10+ tools, system prompt, schemas                |
 
 ### Smart Contracts
-| Contrato | Estado | Tests |
-|----------|--------|-------|
-| VaultManager.sol | ✅ Completo | 7 tests pasando |
-| StrategyExecutor.sol | ✅ Completo | 5 tests pasando |
-| RemittanceScheduler.sol | ✅ Completo | 8 tests pasando |
-| MockERC20.sol | ✅ Completo | Usado en tests |
-| Interfaces (4) | ✅ Completo | IMoneyOnChain, ITropykus, IPriceOracle, IERC20 |
-| Deploy script | ✅ Completo | Deploy a red local y testnet |
-| **Total tests** | **20/20 pasando** | — |
+
+| Contrato                | Estado            | Tests                                          |
+| ----------------------- | ----------------- | ---------------------------------------------- |
+| VaultManager.sol        | ✅ Completo       | 7 tests pasando                                |
+| StrategyExecutor.sol    | ✅ Completo       | 5 tests pasando                                |
+| RemittanceScheduler.sol | ✅ Completo       | 8 tests pasando                                |
+| MockERC20.sol           | ✅ Completo       | Usado en tests                                 |
+| Interfaces (4)          | ✅ Completo       | IMoneyOnChain, ITropykus, IPriceOracle, IERC20 |
+| Deploy script           | ✅ Completo       | Deploy a red local y testnet                   |
+| **Total tests**         | **20/20 pasando** | —                                              |
 
 ### Frontend (Next.js)
-| Página | Estado | Notas |
-|--------|--------|-------|
-| Landing (/) | ✅ Completa | Hero, beneficios, "cómo funciona", footer |
-| Chat (/chat) | ✅ Completa | Quick prompts, chat bubbles, plan cards, confirm |
-| Dashboard (/dashboard) | ✅ Completa | Balances, yield, remesa, actividad reciente |
-| Remesas (/remesas) | ✅ Completa | Lista, crear nueva, estados |
-| Actividad (/actividad) | ✅ Completa | Timeline de transacciones |
-| Configuración (/configuracion) | ✅ Completa | Moneda local, feature flags, info sistema |
+
+| Página                         | Estado      | Notas                                            |
+| ------------------------------ | ----------- | ------------------------------------------------ |
+| Landing (/)                    | ✅ Completa | Hero, beneficios, "cómo funciona", footer        |
+| Chat (/chat)                   | ✅ Completa | Quick prompts, chat bubbles, plan cards, confirm |
+| Dashboard (/dashboard)         | ✅ Completa | Balances, yield, remesa, actividad reciente      |
+| Remesas (/remesas)             | ✅ Completa | Lista, crear nueva, estados                      |
+| Actividad (/actividad)         | ✅ Completa | Timeline de transacciones                        |
+| Configuración (/configuracion) | ✅ Completa | Moneda local, feature flags, info sistema        |
 
 ### API Routes
-| Endpoint | Estado | Notas |
-|----------|--------|-------|
-| POST /api/chat | ✅ Funcional | Mock inteligente, OpenAI cuando hay clave |
-| GET /api/dashboard | ✅ Funcional | Datos mock realistas |
-| GET/POST /api/remittances | ✅ Funcional | In-memory store con seed data |
-| PATCH/DELETE /api/remittances/[id] | ✅ Funcional | Cancelar, ejecutar, eliminar remesas |
-| POST /api/plan/confirm | ✅ Funcional | Confirmar planes de ejecución |
-| GET/POST /api/user | ✅ Funcional | Configuración de usuario y moneda local |
-| GET /api/activity | ✅ Funcional | Datos mock |
+
+| Endpoint                           | Estado       | Notas                                     |
+| ---------------------------------- | ------------ | ----------------------------------------- |
+| POST /api/chat                     | ✅ Funcional | Mock inteligente, OpenAI cuando hay clave |
+| GET /api/dashboard                 | ✅ Funcional | Datos mock realistas                      |
+| GET/POST /api/remittances          | ✅ Funcional | In-memory store con seed data             |
+| PATCH/DELETE /api/remittances/[id] | ✅ Funcional | Cancelar, ejecutar, eliminar remesas      |
+| POST /api/plan/confirm             | ✅ Funcional | Confirmar planes de ejecución             |
+| GET/POST /api/user                 | ✅ Funcional | Configuración de usuario y moneda local   |
+| GET /api/activity                  | ✅ Funcional | Datos mock                                |
 
 ### Frontend Hooks
-| Hook | Estado | Notas |
-|------|--------|-------|
-| useWallet | ✅ Funcional | Estado de wallet, red, connect/disconnect |
-| useBalance | ✅ Funcional | Balance RBTC nativo vía wagmi |
-| useDashboard | ✅ Funcional | TanStack Query con refetch automático |
-| useRemittances | ✅ Funcional | CRUD completo con mutations |
-| useActivity | ✅ Funcional | Historial de transacciones |
-| useLocalCurrency | ✅ Funcional | Conversión USD→ARS/PEN/MXN |
+
+| Hook             | Estado       | Notas                                     |
+| ---------------- | ------------ | ----------------------------------------- |
+| useWallet        | ✅ Funcional | Estado de wallet, red, connect/disconnect |
+| useBalance       | ✅ Funcional | Balance RBTC nativo vía wagmi             |
+| useDashboard     | ✅ Funcional | TanStack Query con refetch automático     |
+| useRemittances   | ✅ Funcional | CRUD completo con mutations               |
+| useActivity      | ✅ Funcional | Historial de transacciones                |
+| useLocalCurrency | ✅ Funcional | Conversión USD→ARS/PEN/MXN                |
 
 ### Blockchain Services
-| Servicio | Estado | Notas |
-|----------|--------|-------|
-| viem-client | ✅ Funcional | PublicClient singleton para Rootstock |
-| vault-service | ✅ Funcional | Lectura de posiciones + prepare de txs |
-| strategy-service | ✅ Funcional | Estimaciones DOC, APY, ejecución de estrategia |
-| remittance-service | ✅ Funcional | CRUD de remesas on-chain |
+
+| Servicio           | Estado       | Notas                                          |
+| ------------------ | ------------ | ---------------------------------------------- |
+| viem-client        | ✅ Funcional | PublicClient singleton para Rootstock          |
+| vault-service      | ✅ Funcional | Lectura de posiciones + prepare de txs         |
+| strategy-service   | ✅ Funcional | Estimaciones DOC, APY, ejecución de estrategia |
+| remittance-service | ✅ Funcional | CRUD de remesas on-chain                       |
 
 ### Agente IA
-| Componente | Estado | Notas |
-|-----------|--------|-------|
-| System prompt | ✅ Completo | 10 reglas obligatorias, español LATAM |
-| LangGraph graph | ✅ Completo | Agent → Tools → Agent loop |
-| Tools (10+) | ✅ Completas | Todas con Zod schemas |
-| Mock fallback | ✅ Funcional | Chat funciona sin OpenAI key |
-| Express server | ✅ Funcional | Puerto 3001, health check + chat |
+
+| Componente      | Estado       | Notas                                 |
+| --------------- | ------------ | ------------------------------------- |
+| System prompt   | ✅ Completo  | 10 reglas obligatorias, español LATAM |
+| LangGraph graph | ✅ Completo  | Agent → Tools → Agent loop            |
+| Tools (10+)     | ✅ Completas | Todas con Zod schemas                 |
+| Mock fallback   | ✅ Funcional | Chat funciona sin OpenAI key          |
+| Express server  | ✅ Funcional | Puerto 3001, health check + chat      |
 
 ### Documentación
-| Archivo | Estado |
-|---------|--------|
-| README.md | ✅ Completo |
-| docs/ARCHITECTURE.md | ✅ Completo |
-| docs/AI_PROCESS.md | ✅ Completo |
-| docs/DEMO_SCRIPT.md | ✅ Completo |
-| docs/JUDGES_GUIDE.md | ✅ Completo |
-| docs/DEPLOYMENT.md | ✅ Completo |
+
+| Archivo              | Estado          |
+| -------------------- | --------------- |
+| README.md            | ✅ Completo     |
+| docs/ARCHITECTURE.md | ✅ Completo     |
+| docs/AI_PROCESS.md   | ✅ Completo     |
+| docs/DEMO_SCRIPT.md  | ✅ Completo     |
+| docs/JUDGES_GUIDE.md | ✅ Completo     |
+| docs/DEPLOYMENT.md   | ✅ Completo     |
 | docs/FINAL_STATUS.md | ✅ Este archivo |
 
 ---
@@ -130,7 +139,7 @@
 ```bash
 # 1. Clonar e instalar
 git clone <repo-url>
-cd beexo-agent-yield
+cd alcancia
 pnpm install
 
 # 2. Configurar env (mínimo necesario para demo)
@@ -144,6 +153,7 @@ pnpm dev
 ```
 
 ### Flujo de demo:
+
 1. **Landing** → Ver propuesta de valor
 2. **Chat** → Escribir "Quiero invertir 0.01 RBTC para generar rendimiento"
 3. **Plan** → Ver plan estructurado con pasos, APY, advertencias
@@ -159,7 +169,7 @@ pnpm dev
 2. **Tropykus testnet**: El protocolo Tropykus puede haber migrado contratos → adapter fallback cubre esto
 3. **OpenAI dependency**: Sin clave, el agente usa respuestas mock (pero son inteligentes y demuestran el flujo)
 4. **Base de datos**: Sin conexión a Supabase, los datos persisten solo en memoria durante la sesión
-5. **Wallet testnet**: Beexo Wallet puede no soportar testnet directamente → usar MetaMask u otra wallet WC-compatible
+5. **Wallet testnet**: AlcancIA Wallet puede no soportar testnet directamente → usar MetaMask u otra wallet WC-compatible
 
 ---
 
@@ -195,5 +205,5 @@ pnpm dev
 
 ---
 
-*Generado: Marzo 2026*
-*Versión: 0.1.0*
+_Generado: Marzo 2026_
+_Versión: 0.1.0_

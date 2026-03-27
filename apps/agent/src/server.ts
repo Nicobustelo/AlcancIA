@@ -76,7 +76,7 @@ app.use((err: Error, _req: express.Request, res: express.Response, _next: expres
 });
 
 app.listen(Number(PORT) || 3001, () => {
-  console.log(`🤖 Beexo Agent running on port ${PORT}`);
+  console.log(`🤖 AlcancIA Agent running on port ${PORT}`);
   console.log(`   Health: http://localhost:${PORT}/api/health`);
   console.log(`   Chat:   POST http://localhost:${PORT}/api/chat`);
 });

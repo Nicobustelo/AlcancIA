@@ -55,11 +55,11 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
       <aside className="hidden w-64 shrink-0 border-r border-border/80 bg-card/80 backdrop-blur-md lg:flex lg:flex-col">
         <div className="flex h-16 items-center gap-2 border-b border-border/80 px-4">
           <div className="flex size-9 items-center justify-center rounded-xl bg-gradient-to-br from-violet-600 to-emerald-600 text-sm font-bold text-white">
-            B
+            A
           </div>
           <div>
-            <p className="text-sm font-bold leading-none">Beexo</p>
-            <p className="text-xs text-muted-foreground">AgentYield</p>
+            <p className="text-sm font-bold leading-none">AlcancIA</p>
+            <p className="text-xs text-muted-foreground">Asistente financiero</p>
           </div>
         </div>
         <NavLinks />

@@ -1,9 +1,4 @@
-import {
-  IntentType,
-  type ExecutionPlan,
-  type ParsedIntent,
-  type PlanStep,
-} from '@beexo/types';
+import { IntentType, type ExecutionPlan, type ParsedIntent, type PlanStep } from '@beexo/types';
 
 function baseIntent(raw: string, type: IntentType): ParsedIntent {
   return {
@@ -31,8 +26,7 @@ export function buildMockReply(message: string): {
     const plan: ExecutionPlan = {
       id: `plan-${Date.now()}`,
       intent: baseIntent(message, IntentType.SUPPLY_TROPYKUS),
-      summary:
-        'Depositar RBTC en Tropykus para generar rendimiento (simulado en demo).',
+      summary: 'Depositar RBTC en Tropykus para generar rendimiento (simulado en demo).',
       steps: steps([
         {
           order: 1,
@@ -49,9 +43,7 @@ export function buildMockReply(message: string): {
       ]),
       estimatedTotalUsd: 620,
       estimatedApy: 7.2,
-      warnings: [
-        'Esta es una simulación: confirmá montos y contratos en testnet antes de firmar.',
-      ],
+      warnings: ['Esta es una simulación: confirmá montos y contratos en testnet antes de firmar.'],
       risks: ['Riesgo de smart contract', 'Volatilidad de RBTC'],
       requiresConfirmation: true,
       status: 'draft',
@@ -113,7 +105,7 @@ export function buildMockReply(message: string): {
   if (/hola|buenas|hey/i.test(lower)) {
     return {
       content:
-        '¡Hola! Soy tu asistente de Beexo AgentYield. Podés pedirme invertir RBTC, programar remesas o revisar conceptos de la app.',
+        '¡Hola! Soy tu asistente de AlcancIA. Podés pedirme invertir RBTC, programar remesas o revisar conceptos de la app.',
     };
   }
 
