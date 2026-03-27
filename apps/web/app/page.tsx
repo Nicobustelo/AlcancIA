@@ -56,12 +56,6 @@ export default function LandingPage() {
             >
               Beneficios
             </a>
-            <a
-              href="#demo"
-              className="text-muted-foreground transition-colors hover:text-foreground"
-            >
-              Demo
-            </a>
           </nav>
           <div className="flex items-center gap-2 sm:gap-3">
             <a
@@ -246,30 +240,6 @@ export default function LandingPage() {
         >
           <div className="mx-auto max-w-6xl px-4 sm:px-6">
             <div className="grid items-center gap-10 lg:grid-cols-2">
-              <div>
-                <div className="inline-flex items-center gap-2 rounded-full border border-border bg-background/80 px-3 py-1 text-xs font-medium backdrop-blur">
-                  <Shield className="size-3.5 text-emerald-600" />
-                  Hackathon &amp; demo
-                </div>
-                <h2 className="mt-4 text-3xl font-bold tracking-tight sm:text-4xl">
-                  Construido para el futuro financiero de LATAM
-                </h2>
-                <p className="mt-4 text-muted-foreground">
-                  AlcancIA combina Rootstock, contratos inteligentes y un agente conversacional para
-                  acercar el ahorro en Bitcoin y las remesas a más personas.
-                </p>
-                <div className="mt-6 flex flex-wrap gap-2">
-                  {['Next.js 15', 'Wagmi / Viem', 'Rootstock', 'IA', 'TypeScript'].map((t) => (
-                    <Badge key={t} variant="secondary">
-                      {t}
-                    </Badge>
-                  ))}
-                </div>
-                <p className="mt-6 text-sm text-muted-foreground">
-                  En esta demo, parte de los datos y respuestas pueden estar simulados para la
-                  presentación; la arquitectura está lista para integraciones reales.
-                </p>
-              </div>
               <Card className="border-border/80 bg-card/90 shadow-xl backdrop-blur">
                 <CardHeader>
                   <CardTitle>Probá el chat</CardTitle>
