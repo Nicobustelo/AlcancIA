@@ -5,6 +5,7 @@ import { buildMockReply } from '@/lib/mock-chat-response';
 
 const bodySchema = z.object({
   message: z.string().min(1, 'El mensaje no puede estar vacío'),
+  walletAddress: z.string().optional(),
   history: z
     .array(
       z.object({
@@ -27,21 +28,15 @@ export async function POST(req: Request) {
   try {
     json = await req.json();
   } catch {
-    return NextResponse.json(
-      { error: 'Cuerpo JSON inválido' },
-      { status: 400 },
-    );
+    return NextResponse.json({ error: 'Cuerpo JSON inválido' }, { status: 400 });
   }
 
   const parsed = bodySchema.safeParse(json);
   if (!parsed.success) {
-    return NextResponse.json(
-      { error: parsed.error.flatten().fieldErrors },
-      { status: 422 },
-    );
+    return NextResponse.json({ error: parsed.error.flatten().fieldErrors }, { status: 422 });
   }
 
-  const { message, history = [] } = parsed.data;
+  const { message, walletAddress, history = [] } = parsed.data;
   const apiKey = process.env.OPENAI_API_KEY;
 
   if (apiKey) {
@@ -51,11 +46,7 @@ export async function POST(req: Request) {
         role: h.role,
         content: h.content,
       }));
-      const { content } = await processMessage(
-        message,
-        '',
-        conversationHistory,
-      );
+      const { content } = await processMessage(message, walletAddress || '', conversationHistory);
       const payload: ChatApiSuccess = {
         content,
         source: 'openai',
@@ -63,7 +54,7 @@ export async function POST(req: Request) {
       return NextResponse.json(payload);
     } catch (e) {
       console.error('[api/chat] OpenAI error', e);
-      const fallback = buildMockReply(message);
+      const fallback = buildMockReply(message, walletAddress);
       const payload: ChatApiSuccess = {
         ...fallback,
         source: 'mock',
@@ -72,7 +63,7 @@ export async function POST(req: Request) {
     }
   }
 
-  const mock = buildMockReply(message);
+  const mock = buildMockReply(message, walletAddress);
   const payload: ChatApiSuccess = { ...mock, source: 'mock' };
   return NextResponse.json(payload);
 }

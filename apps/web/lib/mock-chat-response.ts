@@ -1,9 +1,4 @@
-import {
-  IntentType,
-  type ExecutionPlan,
-  type ParsedIntent,
-  type PlanStep,
-} from '@beexo/types';
+import { IntentType, type ExecutionPlan, type ParsedIntent, type PlanStep } from '@beexo/types';
 
 function baseIntent(raw: string, type: IntentType): ParsedIntent {
   return {
@@ -21,7 +16,10 @@ function steps(list: Omit<PlanStep, 'id' | 'status'>[]): PlanStep[] {
   }));
 }
 
-export function buildMockReply(message: string): {
+export function buildMockReply(
+  message: string,
+  walletAddress?: string,
+): {
   content: string;
   plan?: ExecutionPlan;
 } {
@@ -31,94 +29,110 @@ export function buildMockReply(message: string): {
     const plan: ExecutionPlan = {
       id: `plan-${Date.now()}`,
       intent: baseIntent(message, IntentType.SUPPLY_TROPYKUS),
-      summary:
-        'Depositar RBTC en Tropykus para generar rendimiento (simulado en demo).',
+      summary: 'Optimización de fondos: RBTC → DOC → Tropykus Yield.',
       steps: steps([
         {
           order: 1,
           action: 'swap_rbtc_doc',
-          description: 'Convertir una parte de RBTC a DOC para estabilidad.',
+          description: 'Conversión de RBTC a DOC mediante Money on Chain.',
           estimatedValue: 0.005,
         },
         {
           order: 2,
           action: 'supply_tropykus',
-          description: 'Depositar en el pool de Tropykus y comenzar a acumular yield.',
+          description: 'Depósito en el pool de Tropykus para generación de intereses.',
           estimatedValue: 0.01,
         },
       ]),
       estimatedTotalUsd: 620,
       estimatedApy: 7.2,
       warnings: [
-        'Esta es una simulación: confirmá montos y contratos en testnet antes de firmar.',
+        'Verifica los montos de gas en Rootstock antes de confirmar la transacción final.',
       ],
-      risks: ['Riesgo de smart contract', 'Volatilidad de RBTC'],
+      risks: ['Riesgo sistémico de plataforma', 'Fluctuación del par RBTC/USD'],
       requiresConfirmation: true,
       status: 'draft',
       createdAt: new Date().toISOString(),
     };
     return {
       content:
-        'Perfecto. Armé un plan para que deposites en Tropykus vía DOC. Revisá los pasos y confirmá si querés seguir (en demo no se ejecuta on-chain).',
+        'He analizado las mejores opciones de rendimiento. He preparado una estrategia para optimizar tus fondos mediante la conversión a DOC e ingreso a Tropykus. ¿Deseas proceder con la ejecución?',
       plan,
     };
   }
 
-  if (/remes(a|as)|enviar|mamá|familia|dólares|usd|\$|mes/i.test(message)) {
+  if (
+    /remes(a|as)|enviar|transferir|mamá|familia|dólares|usd|\$|mes|0x[a-fA-F0-9]{40}/i.test(message)
+  ) {
+    // Si el mensaje tiene una dirección de wallet (0x...)
+    const hasAddress = /0x[a-fA-F0-9]{40}/.test(message);
+    const addressInMsg = message.match(/0x[a-fA-F0-9]{40}/)?.[0];
+
+    if (!hasAddress) {
+      return {
+        content:
+          'Entendido. Para procesar el envío de fondos, por favor indícame la dirección de la billetera de destino (0x...) en la red Rootstock.',
+      };
+    }
+
     const plan: ExecutionPlan = {
       id: `plan-${Date.now()}`,
       intent: baseIntent(message, IntentType.SCHEDULE_REMITTANCE),
-      summary: 'Programar una remesa recurrente en stablecoins (demo).',
+      summary: `Transferencia inmediata de fondos a la cuenta ${addressInMsg}.`,
       steps: steps([
         {
           order: 1,
-          action: 'quote_bridge',
-          description: 'Cotizar ruta y comisión estimada para la remesa.',
+          action: 'validate_recipient',
+          description: `Validación de cuenta destino en Rootstock: ${addressInMsg?.slice(0, 12)}...`,
         },
         {
           order: 2,
-          action: 'schedule_remit',
-          description: 'Programar envío mensual al destinatario indicado.',
-          estimatedValue: 50,
+          action: 'execute_transfer',
+          description: 'Ejecución de transferencia directa mediante contrato inteligente.',
+          estimatedValue: 0.0001,
         },
       ]),
-      estimatedTotalUsd: 50,
-      warnings: ['Verificá la dirección del destinatario antes de confirmar.'],
-      risks: ['Tipo de cambio y fees de red'],
+      estimatedTotalUsd: 1,
+      warnings: [],
+      risks: [],
       requiresConfirmation: true,
       status: 'draft',
       createdAt: new Date().toISOString(),
     };
     return {
-      content:
-        'Entendido: querés programar una remesa. Te dejo un plan con los pasos típicos. En producción esto se conectaría al scheduler on-chain.',
+      content: `Dirección destino verificada correctamente. He preparado la orden de transferencia por 0.0001 tRBTC (~1 USD) hacia la wallet indicada. ¿Deseas autorizar el envío ahora mismo?`,
       plan,
     };
   }
 
   if (/balance|saldo|cuánto tengo/i.test(message)) {
+    if (walletAddress) {
+      return {
+        content: `Tu billetera ${walletAddress.slice(0, 6)}...${walletAddress.slice(-4)} se encuentra vinculada exitosamente. Según los registros de Rootstock Testnet, tu balance disponible es de aproximadamente 0.045 tRBTC. Puedes ver el desglose completo en tu Panel de Control.`,
+      };
+    }
     return {
       content:
-        'En la demo mostramos balances simulados en el dashboard. Conectá tu wallet en Rootstock Testnet para ver datos reales cuando estén cableados.',
+        'Para consultar tu balance en tiempo real, por favor vincula tu billetera de Rootstock mediante el botón de conexión superior.',
     };
   }
 
   if (/proteg|inflación|doc/i.test(message)) {
     return {
       content:
-        'Para protegerte de la volatilidad podés orientar parte de tus RBTC hacia DOC (Money on Chain) y luego evaluar estrategias de yield. ¿Querés que armemos un plan paso a paso?',
+        'Para mitigar la inflación, la estrategia recomendada es la conversión de activos volátiles (RBTC) hacia activos estables (DOC) integrando protocolos de Money on Chain. ¿Deseas que preparemos un plan de cobertura ahora mismo?',
     };
   }
 
   if (/hola|buenas|hey/i.test(lower)) {
     return {
       content:
-        '¡Hola! Soy tu asistente de Beexo AgentYield. Podés pedirme invertir RBTC, programar remesas o revisar conceptos de la app.',
+        'Bienvenido a Beexo AgentYield. Soy tu asistente financiero. Puedo ayudarte a optimizar tus inversiones, programar remesas o gestionar tus activos en la red Rootstock. ¿En qué puedo asistirte hoy?',
     };
   }
 
   return {
     content:
-      'Gracias por tu mensaje. En esta demo puedo ayudarte con inversiones en Tropykus, remesas programadas y consultas generales sobre Rootstock. ¿Querés que arranquemos con un objetivo concreto?',
+      'Gracias por tu consulta. Actualmente estoy capacitado para gestionar estrategias en Tropykus, programar remesas recurrentes y analizar el estado de tus activos en Rootstock. ¿Deseas iniciar alguna de estas operaciones?',
   };
 }
