@@ -201,8 +201,8 @@ export default function LandingPage() {
           className="border-t border-border/60 bg-gradient-to-br from-violet-600/10 via-background to-emerald-600/10 py-20 dark:from-violet-900/20 dark:to-emerald-900/20"
         >
           <div className="mx-auto max-w-6xl px-4 sm:px-6">
-            <div className="grid items-center gap-10 lg:grid-cols-2">
-              <Card className="border-border/80 bg-card/90 shadow-xl backdrop-blur">
+            <div className="flex justify-center">
+              <Card className="w-full max-w-xl border-border/80 bg-card/90 shadow-xl backdrop-blur">
                 <CardHeader>
                   <CardTitle>Probá el chat</CardTitle>
                   <CardDescription>
