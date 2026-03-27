@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { useState } from 'react';
 import { Clock, LayoutDashboard, Menu, MessageSquare, Send, Settings, X } from 'lucide-react';
@@ -11,6 +12,7 @@ import { Separator } from '@/components/ui/separator';
 import { WalletButton } from '@/components/shared/wallet-button';
 import { NetworkBadge } from '@/components/shared/network-badge';
 import { ThemeToggle } from '@/components/shared/theme-toggle';
+import appLogo from '../../../../assets/logotipo-de-estilo-de-vida-saludable.png';
 
 const ICONS = {
   MessageSquare,
@@ -54,9 +56,12 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
       {/* Sidebar escritorio */}
       <aside className="hidden w-64 shrink-0 border-r border-border/80 bg-card/80 backdrop-blur-md lg:flex lg:flex-col">
         <div className="flex h-16 items-center gap-2 border-b border-border/80 px-4">
-          <div className="flex size-9 items-center justify-center rounded-xl bg-gradient-to-br from-violet-600 to-emerald-600 text-sm font-bold text-white">
-            A
-          </div>
+          <Image
+            src={appLogo}
+            alt="Logo de AlcancIA"
+            className="size-9 rounded-xl border border-border/60 object-contain bg-white p-0.5"
+            priority
+          />
           <div>
             <p className="text-sm font-bold leading-none">AlcancIA</p>
             <p className="text-xs text-muted-foreground">Asistente financiero</p>

@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Image from 'next/image';
 import {
   ArrowRight,
   Bot,
@@ -18,6 +19,7 @@ import { Separator } from '@/components/ui/separator';
 import { GlowCard } from '@/components/ui/spotlight-card';
 import { ThemeToggle } from '@/components/shared/theme-toggle';
 import { WalletButton } from '@/components/shared/wallet-button';
+import appLogo from '../../../assets/logotipo-de-estilo-de-vida-saludable.png';
 
 export default function LandingPage() {
   return (
@@ -33,9 +35,12 @@ export default function LandingPage() {
             href="/"
             className="flex items-center gap-2 rounded-lg outline-none ring-offset-background focus-visible:ring-2 focus-visible:ring-ring"
           >
-            <div className="flex size-9 items-center justify-center rounded-xl bg-gradient-to-br from-violet-600 to-emerald-600 text-sm font-bold text-white shadow-lg shadow-violet-500/25">
-              A
-            </div>
+            <Image
+              src={appLogo}
+              alt="Logo de AlcancIA"
+              className="size-9 rounded-xl border border-border/60 object-contain bg-white p-0.5 shadow-lg shadow-violet-500/15"
+              priority
+            />
             <div className="leading-tight">
               <span className="block text-base font-bold tracking-tight">AlcancIA</span>
               <span className="text-xs font-medium text-muted-foreground">
