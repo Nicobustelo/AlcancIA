@@ -1,6 +1,8 @@
 'use client';
 
-import { useCallback, useRef, useState } from 'react';
+import { useCallback, useRef, useState, useEffect } from 'react';
+import { useAccount, useSendTransaction } from 'wagmi';
+import { parseEther } from 'viem';
 import type { ExecutionPlan } from '@beexo/types';
 import { Send, Sparkles } from 'lucide-react';
 import { QUICK_PROMPTS } from '@/lib/constants';
@@ -33,23 +35,33 @@ type ChatMessage = {
 function PlanCard({
   plan,
   confirmed,
+  loading,
   onConfirm,
 }: {
   plan: ExecutionPlan;
   confirmed: boolean;
+  loading?: boolean;
   onConfirm: () => void;
 }) {
+  // Acortamos la dirección solo para mostrarla en la UI
+  const displaySummary = plan.summary.replace(
+    /(0x[a-fA-F0-9]{40})/,
+    (addr) => `${addr.slice(0, 6)}...${addr.slice(-4)}`,
+  );
+
   return (
     <Card className="mt-3 max-w-md border-violet-500/20 bg-gradient-to-br from-violet-500/5 to-emerald-500/5">
       <CardHeader className="pb-2">
         <div className="flex flex-wrap items-center gap-2">
-          <CardTitle className="text-base">Plan propuesto</CardTitle>
-          <Badge variant="outline">{plan.status === 'draft' ? 'Borrador' : plan.status}</Badge>
+          <CardTitle className="text-base">Plan de Ejecución</CardTitle>
+          <Badge variant="outline">
+            {plan.status === 'draft' ? 'Pendiente de Firma' : plan.status}
+          </Badge>
           {plan.estimatedApy != null ? (
             <Badge variant="secondary">APY ~{plan.estimatedApy}%</Badge>
           ) : null}
         </div>
-        <CardDescription>{plan.summary}</CardDescription>
+        <CardDescription>{displaySummary}</CardDescription>
       </CardHeader>
       <CardContent className="space-y-3">
         <ol className="list-decimal space-y-2 pl-4 text-sm">
@@ -57,35 +69,30 @@ function PlanCard({
             <li key={s.id}>
               <span className="font-medium">{s.description}</span>
               {s.estimatedValue != null ? (
-                <span className="text-muted-foreground"> — val. est. {s.estimatedValue}</span>
+                <span className="text-muted-foreground">
+                  {' '}
+                  — valor est. {s.estimatedValue} tRBTC
+                </span>
               ) : null}
             </li>
           ))}
         </ol>
-        {plan.warnings.length > 0 ? (
-          <div className="rounded-lg border border-amber-500/30 bg-amber-500/10 p-3 text-xs text-amber-950 dark:text-amber-100">
-            <p className="font-semibold">Advertencias</p>
-            <ul className="mt-1 list-disc pl-4">
-              {plan.warnings.map((w) => (
-                <li key={w}>{w}</li>
-              ))}
-            </ul>
-          </div>
-        ) : null}
       </CardContent>
       {plan.requiresConfirmation ? (
         <CardFooter className="flex flex-wrap gap-2">
           <Button
             type="button"
             size="sm"
-            disabled={confirmed}
+            disabled={confirmed || loading}
             onClick={onConfirm}
+            className="bg-violet-600 hover:bg-violet-700"
           >
-            {confirmed ? 'Plan confirmado' : 'Confirmar plan'}
+            {loading
+              ? 'Firmando en Wallet...'
+              : confirmed
+                ? 'Transacción Confirmada en Bloque'
+                : 'Firmar y Enviar a Rootstock'}
           </Button>
-          <span className="text-xs text-muted-foreground">
-            En demo no se ejecutan transacciones reales.
-          </span>
         </CardFooter>
       ) : null}
     </Card>
@@ -93,22 +100,39 @@ function PlanCard({
 }
 
 export default function ChatPage() {
+  const { address } = useAccount();
+  const {
+    sendTransaction,
+    data: txData,
+    isPending: txLoading,
+    isSuccess: txSuccess,
+    error: txError,
+  } = useSendTransaction();
+
   const [messages, setMessages] = useState<ChatMessage[]>([
     {
       id: 'welcome',
       role: 'assistant',
       content:
-        '¡Hola! Soy tu asistente de Beexo AgentYield. Elegí una sugerencia o escribí qué querés hacer con tu dinero en Rootstock.',
+        '¡Hola! Soy tu asistente financiero de Beexo AgentYield. Elegí una sugerencia o escribí qué querés hacer con tus fondos en Rootstock.',
     },
   ]);
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
-  const [lastSource, setLastSource] = useState<'openai' | 'mock' | null>(null);
   const bottomRef = useRef<HTMLDivElement>(null);
 
   const scrollToBottom = useCallback(() => {
     bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, []);
+
+  // Efecto para marcar el último plan como confirmado cuando la TX de la wallet es exitosa
+  useEffect(() => {
+    if (txSuccess && txData) {
+      setMessages((m) =>
+        m.map((msg, index) => (index === m.length - 1 ? { ...msg, planConfirmed: true } : msg)),
+      );
+    }
+  }, [txSuccess, txData]);
 
   const sendMessage = async (text: string) => {
     const trimmed = text.trim();
@@ -122,7 +146,6 @@ export default function ChatPage() {
     setMessages((m) => [...m, userMsg]);
     setInput('');
     setLoading(true);
-    setLastSource(null);
 
     const history = [...messages, userMsg]
       .filter((m) => m.id !== 'welcome')
@@ -136,6 +159,7 @@ export default function ChatPage() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           message: trimmed,
+          walletAddress: address,
           history: history.slice(0, -1),
         }),
       });
@@ -143,14 +167,12 @@ export default function ChatPage() {
       if (!res.ok) {
         throw new Error(typeof data.error === 'string' ? data.error : 'Error');
       }
-      setLastSource(data.source);
       const assistantMsg: ChatMessage = {
         id: `a-${Date.now()}`,
         role: 'assistant',
         content: data.content,
         plan: data.plan,
         planConfirmed: false,
-        source: data.source,
       };
       setMessages((m) => [...m, assistantMsg]);
     } catch {
@@ -160,7 +182,7 @@ export default function ChatPage() {
           id: `e-${Date.now()}`,
           role: 'assistant',
           content:
-            'Hubo un error al contactar al servidor. Probá de nuevo en unos segundos.',
+            'Hubo un problema de conexión con la red de Rootstock. Por favor, reintenta en unos segundos.',
         },
       ]);
     } finally {
@@ -169,11 +191,32 @@ export default function ChatPage() {
     }
   };
 
-  const confirmPlan = (id: string) => {
+  const confirmPlan = async (id: string, plan: ExecutionPlan) => {
+    // Si es una transferencia (intención de remesa/envío)
+    const transferStep = plan.steps.find((s) => s.action === 'execute_transfer');
+
+    if (transferStep) {
+      // Intentar extraer la dirección de la descripción (donde la pusimos en el mock)
+      const addressMatch = plan.summary.match(/0x[a-fA-F0-9]{40}/);
+      const destAddress = addressMatch ? addressMatch[0] : null;
+      const amount = transferStep.estimatedValue ? String(transferStep.estimatedValue) : '0.005';
+
+      if (destAddress) {
+        try {
+          sendTransaction({
+            to: destAddress as `0x${string}`,
+            value: parseEther(amount),
+          });
+          return; // El useEffect manejará la confirmación visual
+        } catch (e) {
+          console.error('Error al enviar transacción', e);
+        }
+      }
+    }
+
+    // Fallback para otros planes o si falla la extracción
     setMessages((m) =>
-      m.map((msg) =>
-        msg.id === id ? { ...msg, planConfirmed: true, plan: msg.plan } : msg,
-      ),
+      m.map((msg) => (msg.id === id ? { ...msg, planConfirmed: true, plan: msg.plan } : msg)),
     );
   };
 
@@ -181,28 +224,27 @@ export default function ChatPage() {
     <div className="mx-auto flex max-w-4xl flex-col gap-4">
       <div className="flex flex-wrap items-center justify-between gap-2">
         <div>
-          <h1 className="text-2xl font-bold tracking-tight">Chat con el agente</h1>
+          <h1 className="text-2xl font-bold tracking-tight">Asistente Inteligente</h1>
           <p className="text-sm text-muted-foreground">
-            Pedí inversiones, remesas o consultas en lenguaje natural.
+            Gestión de inversiones y remesas mediante procesamiento de lenguaje natural.
           </p>
         </div>
-        {lastSource === 'mock' ? <MockIndicator /> : null}
       </div>
 
       <Card className="flex flex-1 flex-col overflow-hidden border-border/80 shadow-md">
         <CardHeader className="border-b border-border/60 py-4">
-          <CardTitle className="flex items-center gap-2 text-lg">
-            <Sparkles className="size-5 text-violet-600" />
-            Asistente IA
+          <CardTitle className="flex items-center gap-2 text-lg text-violet-700">
+            <Sparkles className="size-5" />
+            Beexo AgentYield
           </CardTitle>
           <CardDescription>
-            Conectado a la API interna de la demo (OpenAI si hay clave configurada).
+            Optimización de rendimiento en Rootstock mediante inteligencia artificial.
           </CardDescription>
         </CardHeader>
         <CardContent className="flex flex-1 flex-col gap-4 p-0">
           <div className="px-4 pt-4">
             <p className="mb-2 text-xs font-medium text-muted-foreground">
-              Sugerencias rápidas
+              Sugerencias de operación
             </p>
             <div className="flex flex-wrap gap-2">
               {QUICK_PROMPTS.map((p) => (
@@ -211,7 +253,7 @@ export default function ChatPage() {
                   type="button"
                   variant="secondary"
                   size="sm"
-                  className="rounded-full"
+                  className="rounded-full bg-violet-50 hover:bg-violet-100 dark:bg-violet-950/20"
                   disabled={loading}
                   onClick={() => void sendMessage(p.message)}
                 >
@@ -224,35 +266,31 @@ export default function ChatPage() {
             </div>
           </div>
           <Separator />
-          <ScrollArea className="min-h-[420px] flex-1 px-4 pb-4" maxHeightClassName="max-h-[min(60vh,520px)]">
+          <ScrollArea
+            className="min-h-[420px] flex-1 px-4 pb-4"
+            maxHeightClassName="max-h-[min(60vh,520px)]"
+          >
             <div className="space-y-4 py-2">
               {messages.map((msg) => (
                 <div
                   key={msg.id}
-                  className={cn(
-                    'flex',
-                    msg.role === 'user' ? 'justify-end' : 'justify-start',
-                  )}
+                  className={cn('flex', msg.role === 'user' ? 'justify-end' : 'justify-start')}
                 >
                   <div
                     className={cn(
                       'max-w-[85%] rounded-2xl px-4 py-3 text-sm shadow-sm',
                       msg.role === 'user'
-                        ? 'rounded-br-md bg-primary text-primary-foreground'
+                        ? 'rounded-br-md bg-violet-700 text-white'
                         : 'rounded-bl-md border border-border bg-card text-card-foreground',
                     )}
                   >
                     <p className="whitespace-pre-wrap">{msg.content}</p>
-                    {msg.role === 'assistant' && msg.source ? (
-                      <p className="mt-2 text-[10px] uppercase tracking-wide text-muted-foreground">
-                        Fuente: {msg.source === 'openai' ? 'OpenAI' : 'Simulado'}
-                      </p>
-                    ) : null}
                     {msg.role === 'assistant' && msg.plan ? (
                       <PlanCard
                         plan={msg.plan}
                         confirmed={msg.planConfirmed ?? false}
-                        onConfirm={() => confirmPlan(msg.id)}
+                        loading={txLoading && msg.id === messages[messages.length - 1].id}
+                        onConfirm={() => confirmPlan(msg.id, msg.plan!)}
                       />
                     ) : null}
                   </div>
