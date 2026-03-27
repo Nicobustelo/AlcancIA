@@ -15,6 +15,7 @@ import { cn } from '@/lib/utils';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
+import { GlowCard } from '@/components/ui/spotlight-card';
 import { ThemeToggle } from '@/components/shared/theme-toggle';
 import { WalletButton } from '@/components/shared/wallet-button';
 
@@ -148,32 +149,30 @@ export default function LandingPage() {
                   title: 'Conectá tu wallet',
                   desc: 'Usá tu wallet compatible para conectarte de forma segura a Rootstock Testnet.',
                   icon: Wallet,
-                  tint: 'from-violet-500/20 to-violet-600/5',
+                  glow: 'purple' as const,
                 },
                 {
                   step: '2',
                   title: 'Hablá con tu asistente',
                   desc: 'Decile qué querés hacer en lenguaje natural: invertir, enviar o consultar balances.',
                   icon: Bot,
-                  tint: 'from-emerald-500/20 to-emerald-600/5',
+                  glow: 'green' as const,
                 },
                 {
                   step: '3',
                   title: 'Ahorrá y enviá',
                   desc: 'Tu dinero puede generar rendimiento y podés programar remesas recurrentes.',
                   icon: LineChart,
-                  tint: 'from-amber-500/20 to-orange-600/5',
+                  glow: 'orange' as const,
                 },
               ].map((item) => (
-                <Card
+                <GlowCard
                   key={item.step}
-                  className="relative overflow-hidden border-border/80 bg-card/80 shadow-sm backdrop-blur-sm"
+                  glowColor={item.glow}
+                  customSize
+                  className="h-full overflow-hidden border-border/80 bg-card/80 shadow-sm"
                 >
-                  <div
-                    className={`absolute -right-8 -top-8 size-32 rounded-full bg-gradient-to-br ${item.tint} blur-2xl`}
-                    aria-hidden
-                  />
-                  <CardHeader className="relative">
+                  <CardHeader className="relative gap-2">
                     <div className="mb-2 flex size-12 items-center justify-center rounded-2xl bg-primary/10 text-primary">
                       <item.icon className="size-6" />
                     </div>
@@ -183,7 +182,7 @@ export default function LandingPage() {
                     <CardTitle className="mt-2 text-xl">{item.title}</CardTitle>
                     <CardDescription className="text-base">{item.desc}</CardDescription>
                   </CardHeader>
-                </Card>
+                </GlowCard>
               ))}
             </div>
           </div>
@@ -201,24 +200,33 @@ export default function LandingPage() {
                   title: 'Dólares digitales',
                   desc: 'Convertí tus RBTC a dólares estables (DOC) cuando lo necesites.',
                   icon: Coins,
+                  glow: 'blue' as const,
                 },
                 {
                   title: 'Rendimiento automático',
                   desc: 'Tu dinero puede crecer en Tropykus con estrategias guiadas por IA.',
                   icon: LineChart,
+                  glow: 'green' as const,
                 },
                 {
                   title: 'Remesas programadas',
                   desc: 'Enviá dinero a tu familia cada mes sin complicaciones.',
                   icon: Heart,
+                  glow: 'red' as const,
                 },
                 {
                   title: 'Asistente IA',
                   desc: 'Un copiloto financiero que habla español y entiende tu contexto.',
                   icon: Sparkles,
+                  glow: 'purple' as const,
                 },
               ].map((b) => (
-                <Card key={b.title} className="border-border/80 transition-shadow hover:shadow-md">
+                <GlowCard
+                  key={b.title}
+                  glowColor={b.glow}
+                  customSize
+                  className="h-full border-border/80 bg-card/80 transition-shadow hover:shadow-md"
+                >
                   <CardHeader>
                     <div className="mb-2 flex size-10 items-center justify-center rounded-xl bg-secondary">
                       <b.icon className="size-5 text-primary" />
@@ -226,7 +234,7 @@ export default function LandingPage() {
                     <CardTitle className="text-lg">{b.title}</CardTitle>
                     <CardDescription>{b.desc}</CardDescription>
                   </CardHeader>
-                </Card>
+                </GlowCard>
               ))}
             </div>
           </div>
