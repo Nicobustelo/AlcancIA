@@ -12,15 +12,10 @@ import {
 } from 'lucide-react';
 import { Button, buttonVariants } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
+import { ThemeToggle } from '@/components/shared/theme-toggle';
 import { WalletButton } from '@/components/shared/wallet-button';
 
 export default function LandingPage() {
@@ -33,15 +28,16 @@ export default function LandingPage() {
 
       <header className="sticky top-0 z-50 border-b border-border/60 bg-background/70 backdrop-blur-xl">
         <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-6">
-          <Link href="/" className="flex items-center gap-2 rounded-lg outline-none ring-offset-background focus-visible:ring-2 focus-visible:ring-ring">
+          <Link
+            href="/"
+            className="flex items-center gap-2 rounded-lg outline-none ring-offset-background focus-visible:ring-2 focus-visible:ring-ring"
+          >
             <div className="flex size-9 items-center justify-center rounded-xl bg-gradient-to-br from-violet-600 to-emerald-600 text-sm font-bold text-white shadow-lg shadow-violet-500/25">
               B
             </div>
             <div className="leading-tight">
               <span className="block text-base font-bold tracking-tight">Beexo</span>
-              <span className="text-xs font-medium text-muted-foreground">
-                AgentYield
-              </span>
+              <span className="text-xs font-medium text-muted-foreground">AgentYield</span>
             </div>
           </Link>
           <nav className="hidden items-center gap-8 text-sm font-medium md:flex">
@@ -68,10 +64,7 @@ export default function LandingPage() {
             <a
               href="#como-funciona"
               aria-label="Menú"
-              className={cn(
-                buttonVariants({ variant: 'ghost', size: 'icon' }),
-                'md:hidden',
-              )}
+              className={cn(buttonVariants({ variant: 'ghost', size: 'icon' }), 'md:hidden')}
             >
               <Menu className="size-5" />
             </a>
@@ -84,6 +77,7 @@ export default function LandingPage() {
             >
               Ir al chat
             </Link>
+            <ThemeToggle />
             <WalletButton />
           </div>
         </div>
@@ -107,9 +101,9 @@ export default function LandingPage() {
               Enviá remesas.
             </h1>
             <p className="mx-auto mt-6 max-w-2xl text-pretty text-lg text-muted-foreground sm:text-xl">
-              Un asistente de IA te guía para ahorrar en Bitcoin, obtener rendimiento en
-              protocolos como Tropykus y programar remesas a tu familia, todo desde una
-              experiencia simple y en tu idioma.
+              Un asistente de IA te guía para ahorrar en Bitcoin, obtener rendimiento en protocolos
+              como Tropykus y programar remesas a tu familia, todo desde una experiencia simple y en
+              tu idioma.
             </p>
             <div className="mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row sm:gap-4">
               <Link
@@ -142,9 +136,7 @@ export default function LandingPage() {
         >
           <div className="mx-auto max-w-6xl px-4 sm:px-6">
             <div className="mx-auto max-w-2xl text-center">
-              <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">
-                Cómo funciona
-              </h2>
+              <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">Cómo funciona</h2>
               <p className="mt-3 text-muted-foreground">
                 Tres pasos para empezar a usar Beexo AgentYield
               </p>
@@ -200,12 +192,8 @@ export default function LandingPage() {
         <section id="beneficios" className="py-20">
           <div className="mx-auto max-w-6xl px-4 sm:px-6">
             <div className="mx-auto max-w-2xl text-center">
-              <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">
-                Beneficios
-              </h2>
-              <p className="mt-3 text-muted-foreground">
-                Todo lo que necesitás en un solo lugar
-              </p>
+              <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">Beneficios</h2>
+              <p className="mt-3 text-muted-foreground">Todo lo que necesitás en un solo lugar</p>
             </div>
             <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
               {[
@@ -230,10 +218,7 @@ export default function LandingPage() {
                   icon: Sparkles,
                 },
               ].map((b) => (
-                <Card
-                  key={b.title}
-                  className="border-border/80 transition-shadow hover:shadow-md"
-                >
+                <Card key={b.title} className="border-border/80 transition-shadow hover:shadow-md">
                   <CardHeader>
                     <div className="mb-2 flex size-10 items-center justify-center rounded-xl bg-secondary">
                       <b.icon className="size-5 text-primary" />
@@ -266,17 +251,15 @@ export default function LandingPage() {
                   para acercar el ahorro en Bitcoin y las remesas a más personas.
                 </p>
                 <div className="mt-6 flex flex-wrap gap-2">
-                  {['Next.js 15', 'Wagmi / Viem', 'Rootstock', 'IA', 'TypeScript'].map(
-                    (t) => (
-                      <Badge key={t} variant="secondary">
-                        {t}
-                      </Badge>
-                    ),
-                  )}
+                  {['Next.js 15', 'Wagmi / Viem', 'Rootstock', 'IA', 'TypeScript'].map((t) => (
+                    <Badge key={t} variant="secondary">
+                      {t}
+                    </Badge>
+                  ))}
                 </div>
                 <p className="mt-6 text-sm text-muted-foreground">
-                  En esta demo, parte de los datos y respuestas pueden estar simulados para
-                  la presentación; la arquitectura está lista para integraciones reales.
+                  En esta demo, parte de los datos y respuestas pueden estar simulados para la
+                  presentación; la arquitectura está lista para integraciones reales.
                 </p>
               </div>
               <Card className="border-border/80 bg-card/90 shadow-xl backdrop-blur">
@@ -322,10 +305,7 @@ export default function LandingPage() {
               Chat
             </Link>
             <Separator orientation="vertical" className="hidden h-4 sm:block" />
-            <Link
-              href="/dashboard"
-              className="text-muted-foreground hover:text-foreground"
-            >
+            <Link href="/dashboard" className="text-muted-foreground hover:text-foreground">
               Dashboard
             </Link>
             <Separator orientation="vertical" className="hidden h-4 sm:block" />
@@ -334,8 +314,7 @@ export default function LandingPage() {
             </Link>
           </div>
           <p className="text-sm font-medium text-muted-foreground">
-            Hecho con <Heart className="mx-1 inline size-4 fill-red-500 text-red-500" />{' '}
-            para LATAM
+            Hecho con <Heart className="mx-1 inline size-4 fill-red-500 text-red-500" /> para LATAM
           </p>
         </div>
       </footer>

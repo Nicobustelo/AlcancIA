@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { Providers } from './providers';
 import './globals.css';
+import { getThemeScript } from '@/lib/theme';
 
 export const metadata: Metadata = {
   title: 'Beexo AgentYield — Ahorro inteligente en Bitcoin',
@@ -8,14 +9,11 @@ export const metadata: Metadata = {
     'Protegé tus ahorros, generá rendimiento y enviá remesas con inteligencia artificial en la red de Rootstock.',
 };
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="es">
+    <html lang="es" suppressHydrationWarning>
       <body className="min-h-screen antialiased">
+        <script dangerouslySetInnerHTML={{ __html: getThemeScript() }} />
         <Providers>{children}</Providers>
       </body>
     </html>

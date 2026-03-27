@@ -3,21 +3,14 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useState } from 'react';
-import {
-  Clock,
-  LayoutDashboard,
-  Menu,
-  MessageSquare,
-  Send,
-  Settings,
-  X,
-} from 'lucide-react';
+import { Clock, LayoutDashboard, Menu, MessageSquare, Send, Settings, X } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { NAV_ITEMS } from '@/lib/constants';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import { WalletButton } from '@/components/shared/wallet-button';
 import { NetworkBadge } from '@/components/shared/network-badge';
+import { ThemeToggle } from '@/components/shared/theme-toggle';
 
 const ICONS = {
   MessageSquare,
@@ -71,10 +64,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
         </div>
         <NavLinks />
         <div className="mt-auto border-t border-border/80 p-4">
-          <Link
-            href="/"
-            className="text-xs text-muted-foreground hover:text-foreground"
-          >
+          <Link href="/" className="text-xs text-muted-foreground hover:text-foreground">
             ← Volver al inicio
           </Link>
         </div>
@@ -131,6 +121,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
             </div>
           </div>
           <div className="flex flex-wrap items-center justify-end gap-2 sm:gap-3">
+            <ThemeToggle />
             <NetworkBadge />
             <Separator orientation="vertical" className="hidden h-8 sm:block" />
             <WalletButton />
